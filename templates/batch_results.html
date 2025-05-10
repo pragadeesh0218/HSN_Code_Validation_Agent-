@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="validation-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Batch Validation Results</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6>Validation Summary</h6>
+                    <a href="/" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i> Back to Validator
+                    </a>
+                </div>
+                <hr>
+                
+                {% set valid_count = results|selectattr('valid', 'eq', true)|list|length %}
+                {% set total_count = results|length %}
+                {% set invalid_count = total_count - valid_count %}
+                {% set valid_percentage = (valid_count / total_count * 100)|round|int if total_count > 0 else 0 %}
+                
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="card bg-light text-dark p-3 result-card">
+                            <h3>{{ total_count }}</h3>
+                            <p class="mb-0">Total HSN Codes</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-success text-white p-3 result-card">
+                            <h3>{{ valid_count }}</h3>
+                            <p class="mb-0">Valid HSN Codes</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-danger text-white p-3 result-card">
+                            <h3>{{ invalid_count }}</h3>
+                            <p class="mb-0">Invalid HSN Codes</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress mt-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ valid_percentage }}%" 
+                         aria-valuenow="{{ valid_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ valid_percentage }}% Valid
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-responsive mt-4">
+                <table class="table table-striped table-hover validation-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>HSN Code</th>
+                            <th>Status</th>
+                            <th>Message</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr class="{{ 'valid-row' if result.valid else 'invalid-row' }}">
+                            <td>{{ loop.index }}</td>
+                            <td><code>{{ result.hsn_code }}</code></td>
+                            <td>
+                                {% if result.valid %}
+                                <span class="badge bg-success">Valid</span>
+                                {% else %}
+                                <span class="badge bg-danger">Invalid</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ result.message }}</td>
+                            <td>
+                                {% if result.description %}
+                                {{ result.description }}
+                                {% else %}
+                                <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i> Return to Main Page
+                </a>
+                <!-- Add an export option in the future if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

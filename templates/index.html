@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="validation-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="single-tab" href="#">Single Validation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="batch-tab" href="#">Batch Validation</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <!-- Single HSN Validation Form -->
+            <div id="single-validation">
+                <h5 class="card-title">Validate a Single HSN Code</h5>
+                <p class="card-text text-muted">Enter an HSN code to check its validity against the master dataset.</p>
+                
+                <form id="single-validation-form" method="post">
+                    <div class="mb-3">
+                        <label for="hsn_code" class="form-label">HSN Code</label>
+                        <input type="text" class="form-control" id="hsn_code" name="hsn_code" 
+                               placeholder="Enter HSN code (e.g., 01011010)" required>
+                        <div class="form-text">
+                            HSN codes typically range from 2 to 8 digits representing hierarchical classification.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check-circle me-2"></i> Validate
+                    </button>
+                </form>
+                
+                <div id="validation-results" class="mt-4"></div>
+            </div>
+            
+            <!-- Batch HSN Validation Form -->
+            <div id="batch-validation" class="d-none">
+                <h5 class="card-title">Batch Validate Multiple HSN Codes</h5>
+                <p class="card-text text-muted">Upload a CSV or Excel file containing HSN codes for batch validation.</p>
+                
+                <form action="/batch_validate" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="batch_file" class="form-label">Upload File</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="batch_file" name="file" 
+                                   accept=".csv, .xlsx, .xls" required>
+                        </div>
+                        <div class="form-text">
+                            File must contain a column named "HSNCode" with the codes to validate.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload me-2"></i> Upload and Validate
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i> What are HSN Codes?</h5>
+        </div>
+        <div class="card-body">
+            <p>Harmonized System Nomenclature (HSN) codes are an internationally standardized system of names and numbers to classify traded products.</p>
+            
+            <h6 class="mt-3">Examples:</h6>
+            <ul>
+                <li><strong>01</strong> - LIVE ANIMALS</li>
+                <li><strong>0101</strong> - LIVE HORSES, ASSES, MULES AND HINNIES</li>
+                <li><strong>01011010</strong> - LIVE HORSES, ASSES, MULES AND HINNIES PURE-BRED BREEDING ANIMALS HORSES</li>
+            </ul>
+            
+            <h6 class="mt-3">Validation Checks:</h6>
+            <ol>
+                <li><strong>Format Validation:</strong> Checks if the input follows the expected format (2-8 digits).</li>
+                <li><strong>Existence Validation:</strong> Verifies if the HSN code exists in the master database.</li>
+                <li><strong>Hierarchical Validation:</strong> Checks if parent codes (e.g., for 01011010, the parents are 010110, 0101, 01) exist.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

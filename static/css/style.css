@@ -1,0 +1,95 @@
+/* Custom styles for HSN Code Validator */
+
+.validation-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.nav-tabs {
+    border-bottom: none;
+    margin-bottom: 1rem;
+}
+
+.nav-tabs .nav-link {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: var(--bs-primary);
+}
+
+.result-card {
+    transition: all 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom file input styling */
+.custom-file-input {
+    cursor: pointer;
+}
+
+/* Title area styling */
+.title-area {
+    background-color: var(--bs-primary);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 15px 15px;
+}
+
+.footer {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+}
+
+/* Help text styles */
+.help-text {
+    color: var(--bs-secondary);
+    font-size: 0.9rem;
+}
+
+/* Loading spinner */
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+/* Batch results table */
+.validation-table th {
+    position: sticky;
+    top: 0;
+    background-color: var(--bs-dark);
+    color: white;
+    z-index: 10;
+}
+
+.validation-table .valid-row {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.validation-table .invalid-row {
+    background-color: rgba(220, 53, 69, 0.05);
+}
